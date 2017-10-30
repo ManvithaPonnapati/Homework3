@@ -221,8 +221,6 @@ function trainingloop()
         println((:epoch,epoch,:loss,losses...))
     end
 end
-trainingloop()
-Profile.clear()
 @profile trainingloop()
 
 println("########## FINAL  MODEL OUTPUT ############")
