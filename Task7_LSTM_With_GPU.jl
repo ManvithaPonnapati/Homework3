@@ -221,7 +221,7 @@ function trainingloop()
         println((:epoch,epoch,:loss,losses...))
     end
 end
-trainingloop()
+#trainingloop()
 Profile.clear()
 @profile trainingloop()
 
