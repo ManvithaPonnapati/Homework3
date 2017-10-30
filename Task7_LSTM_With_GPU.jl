@@ -213,15 +213,14 @@ println((:epoch,0,:loss,losses...))
 
 optim = map(x->Adam(lr=lr, gclip=gclip), model)
 # MAIN LOOP
-function trainingloop()
-    for epoch=1:epochs
-        @time train(model, data[1], optim, min(epoch,seqlength); pdrop=dpout)
-        # Calculate and print the losses after each epoch
-        losses = map(d->avgloss(model,d,100),data)
-        println((:epoch,epoch,:loss,losses...))
-    end
+Profile.clear()
+for epoch=1:epochs
+    @time @profile train(model, data[1], optim, min(epoch,seqlength); pdrop=dpout)
+    # Calculate and print the losses after each epoch
+    losses = map(d->avgloss(model,d,100),data)
+    println((:epoch,epoch,:loss,losses...))
 end
-@profile trainingloop()
+
 
 println("########## FINAL  MODEL OUTPUT ############")
 state = initstate(model,1)
