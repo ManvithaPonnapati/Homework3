@@ -1,0 +1,184 @@
+TRAINING FUNCTION
+
+Variables:
+  #unused#::#kw##train
+  #temp#@_2::Array{Any,1}
+  ::#train
+  model::Array{Any,1}
+  sequence::Array{Array{Int64,1},1}
+  optim::Array{Knet.Adam,1}
+  S::Int64
+  #temp#@_8::Int64
+  #temp#@_9::Int64
+  #temp#@_10::Any
+  #temp#@_11::Int64
+  pdrop::Any
+
+Body:
+  begin 
+      pdrop::Any = 0
+      SSAValue(2) = (Base.arraylen)(#temp#@_2::Array{Any,1})::Int64
+      SSAValue(3) = (Base.select_value)((Base.sle_int)(0, 1)::Bool, (Base.ashr_int)(SSAValue(2), (Base.bitcast)(UInt64, 1))::Int64, (Base.shl_int)(SSAValue(2), (Base.bitcast)(UInt64, (Base.neg_int)(1)::Int64))::Int64)::Int64
+      SSAValue(5) = (Base.select_value)((Base.sle_int)(1, SSAValue(3))::Bool, SSAValue(3), (Base.sub_int)(1, 1)::Int64)::Int64
+      #temp#@_11::Int64 = 1
+      6: 
+      unless (Base.not_int)((#temp#@_11::Int64 === (Base.add_int)(SSAValue(5), 1)::Int64)::Bool)::Bool goto 26
+      SSAValue(6) = #temp#@_11::Int64
+      SSAValue(7) = (Base.add_int)(#temp#@_11::Int64, 1)::Int64
+      #temp#@_8::Int64 = SSAValue(6)
+      #temp#@_11::Int64 = SSAValue(7)
+      #temp#@_9::Int64 = (Base.sub_int)((Base.mul_int)(#temp#@_8::Int64, 2)::Int64, 1)::Int64
+      #temp#@_10::Any = (Core.arrayref)(#temp#@_2::Array{Any,1}, #temp#@_9::Int64)::Any
+      unless (#temp#@_10::Any === :pdrop)::Bool goto 17
+      pdrop::Any = (Core.arrayref)(#temp#@_2::Array{Any,1}, (Base.add_int)(#temp#@_9::Int64, 1)::Int64)::Any
+      goto 24
+      17: 
+      SSAValue(8) = ::#train
+      SSAValue(9) = model::Array{Any,1}
+      SSAValue(10) = sequence::Array{Array{Int64,1},1}
+      SSAValue(11) = optim::Array{Knet.Adam,1}
+      SSAValue(12) = S::Int64
+      (Base.throw)($(Expr(:new, :(Base.MethodError), :((Core.getfield)((Core.getfield)((Core.getfield)(#train, :name)::TypeName, :mt), :kwsorter)), :((Core.tuple)(#temp#@_2, SSAValue(8), SSAValue(9), SSAValue(10), SSAValue(11), SSAValue(12))::Tuple{Array{Any,1},#train,Array{Any,1},Array{Array{Int64,1},1},Array{Knet.Adam,1},Int64}), 0xffffffffffffffff)))::Union{}
+      24: 
+      goto 6
+      26: 
+      return (Main.#train#14)(pdrop::Any, ::#train, model::Array{Any,1}, sequence::Array{Array{Int64,1},1}, optim::Array{Knet.Adam,1}, S::Int64)::Void
+  end::Void
+  2.696954 seconds (341.63 k allocations: 18.455 MiB, 0.51% gc time)
+  
+  
+GENERATE RESULTS 
+
+
+ ########## FINAL  MODEL OUTPUT ############
+Variables:
+  #self#::#generate
+  model::Array{Any,1}
+  tok2int::Dict{Char,Int64}
+  nchar::Int64
+  k::Char
+  v::Int64
+  #temp#@_7::Int64
+  #temp#@_8::Int64
+  t::Int64
+  embed::Any
+  #temp#@_11::Int64
+  ypred::Any
+  #temp#@_13::Int64
+  int2tok::Array{Char,1}
+  input::Any
+  state::Array{Any,1}
+  i::Int64
+  index::Int64
+  #temp#@_19::Int64
+
+Body:
+  begin 
+      NewvarNode(:(input::Any))
+      NewvarNode(:(state::Array{Any,1}))
+      SSAValue(11) = (Core.getfield)(tok2int::Dict{Char,Int64}, :count)::Int64
+      int2tok::Array{Char,1} = $(Expr(:foreigncall, :(:jl_alloc_array_1d), Array{Char,1}, svec(Any, Int64), Array{Char,1}, 0, SSAValue(11), 0)) # line 3:
+      $(Expr(:inbounds, false))
+      # meta: location dict.jl start 574
+      i::Int64 = $(Expr(:invoke, MethodInstance for skip_deleted(::Dict{Char,Int64}, ::Int64), :(Base.skip_deleted), :(tok2int), :((Core.getfield)(tok2int, :idxfloor)::Int64))) # line 575:
+      (Core.setfield!)(tok2int::Dict{Char,Int64}, :idxfloor, i::Int64)::Int64
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      #temp#@_8::Int64 = i::Int64
+      14: 
+      unless (Base.not_int)((Base.slt_int)((Base.arraylen)((Core.getfield)(tok2int::Dict{Char,Int64}, :vals)::Array{Int64,1})::Int64, #temp#@_8::Int64)::Bool)::Bool goto 30
+      SSAValue(24) = $(Expr(:new, Pair{Char,Int64}, :((Base.arrayref)((Core.getfield)(tok2int, :keys)::Array{Char,1}, #temp#@_8)::Char), :((Base.arrayref)((Core.getfield)(tok2int, :vals)::Array{Int64,1}, #temp#@_8)::Int64)))
+      SSAValue(25) = $(Expr(:invoke, MethodInstance for skip_deleted(::Dict{Char,Int64}, ::Int64), :(Base.skip_deleted), :(tok2int), :((Base.add_int)(#temp#@_8, 1)::Int64)))
+      SSAValue(2) = SSAValue(24)
+      SSAValue(26) = (Base.getfield)(SSAValue(2), 1)::Char
+      SSAValue(27) = (Base.add_int)(1, 1)::Int64
+      k::Char = SSAValue(26)
+      SSAValue(28) = (Base.getfield)(SSAValue(2), 2)::Int64
+      SSAValue(29) = (Base.add_int)(2, 1)::Int64
+      v::Int64 = SSAValue(28)
+      #temp#@_8::Int64 = SSAValue(25) # line 3:
+      (Base.arrayset)(int2tok::Array{Char,1}, k::Char, v::Int64)::Array{Char,1}
+      28: 
+      goto 14
+      30:  # line 4:
+      $(Expr(:inbounds, false))
+      # meta: location dict.jl getindex 473
+      index::Int64 = $(Expr(:invoke, MethodInstance for ht_keyindex(::Dict{Char,Int64}, ::Char), :(Base.ht_keyindex), :(tok2int), ' ')) # line 474:
+      unless (Base.slt_int)(index::Int64, 0)::Bool goto 39
+      #temp#@_19::Int64 = (Base.throw)($(Expr(:new, :(Base.KeyError), ' ')))::Union{}
+      goto 41
+      39: 
+      #temp#@_19::Int64 = (Base.arrayref)((Core.getfield)(tok2int::Dict{Char,Int64}, :vals)::Array{Int64,1}, index::Int64)::Int64
+      41: 
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      input::Any = #temp#@_19::Int64 # line 5:
+      state::Array{Any,1} = $(Expr(:invoke, MethodInstance for initstate(::Array{Any,1}, ::Int64), :(Main.initstate), :(model), 1)) # line 6:
+      SSAValue(30) = (Base.select_value)((Base.sle_int)(1, nchar::Int64)::Bool, nchar::Int64, (Base.sub_int)(1, 1)::Int64)::Int64
+      #temp#@_13::Int64 = 1
+      50: 
+      unless (Base.not_int)((#temp#@_13::Int64 === (Base.add_int)(SSAValue(30), 1)::Int64)::Bool)::Bool goto 108
+      SSAValue(31) = #temp#@_13::Int64
+      SSAValue(32) = (Base.add_int)(#temp#@_13::Int64, 1)::Int64
+      #temp#@_13::Int64 = SSAValue(32) # line 7:
+      $(Expr(:inbounds, false))
+      # meta: location abstractarray.jl endof 134
+      # meta: location abstractarray.jl linearindices 99
+      # meta: location abstractarray.jl indices1 71
+      # meta: location abstractarray.jl indices 64
+      SSAValue(15) = (Base.arraysize)(model::Array{Any,1}, 1)::Int64
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      SSAValue(7) = (Base.arrayref)(model::Array{Any,1}, (Base.sub_int)((Base.select_value)((Base.slt_int)(SSAValue(15), 0)::Bool, 0, SSAValue(15))::Int64, 2)::Int64)::Any
+      embed::Any = (Main.getindex)(SSAValue(7), (Base.vect)(input::Any)::Array{_,1} where _, Main.:)::Any # line 8:
+      SSAValue(8) = (Main.#predict#10)(0, Main.predict, model::Array{Any,1}, state::Array{Any,1}, embed::Any)::Tuple{Any,Array{Any,1}}
+      SSAValue(33) = (Base.getfield)(SSAValue(8), 1)::Any
+      SSAValue(34) = (Base.add_int)(1, 1)::Int64
+      ypred::Any = SSAValue(33)
+      SSAValue(35) = (Base.getfield)(SSAValue(8), 2)::Array{Any,1}
+      SSAValue(36) = (Base.add_int)(2, 1)::Int64
+      state::Array{Any,1} = SSAValue(35) # line 9:
+      $(Expr(:inbounds, false))
+      # meta: location abstractarray.jl endof 134
+      # meta: location abstractarray.jl linearindices 99
+      # meta: location abstractarray.jl indices1 71
+      # meta: location abstractarray.jl indices 64
+      SSAValue(21) = (Base.arraysize)(model::Array{Any,1}, 1)::Int64
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      SSAValue(22) = (ypred::Any * (Base.arrayref)(model::Array{Any,1}, (Base.sub_int)((Base.select_value)((Base.slt_int)(SSAValue(21), 0)::Bool, 0, SSAValue(21))::Int64, 1)::Int64)::Any)::Any
+      $(Expr(:inbounds, false))
+      # meta: location abstractarray.jl endof 134
+      # meta: location abstractarray.jl linearindices 99
+      # meta: location abstractarray.jl indices1 71
+      # meta: location abstractarray.jl indices 64
+      SSAValue(18) = (Base.arraysize)(model::Array{Any,1}, 1)::Int64
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      ypred::Any = (Base.broadcast)(Main.+, SSAValue(22), (Base.arrayref)(model::Array{Any,1}, (Base.select_value)((Base.slt_int)(SSAValue(18), 0)::Bool, 0, SSAValue(18))::Int64)::Any)::Any # line 10:
+      input::Any = (Main.sample)((Base.broadcast)(Main.exp, (Main.logp)(ypred::Any)::Any)::Any)::Any # line 11:
+      (Main.print)((Main.getindex)(int2tok::Array{Char,1}, input::Any)::Any)::Any
+      106: 
+      goto 50
+      108:  # line 13:
+      $(Expr(:inbounds, false))
+      # meta: location coreio.jl println 5
+      SSAValue(23) = (Core.typeassert)(Base.STDOUT, Base.IO)::IO
+      # meta: location coreio.jl println 6
+      # meta: location char.jl print 45
+      (Base.write)(SSAValue(23), '\n')::Any
+      # meta: pop location
+      # meta: pop location
+      # meta: pop location
+      $(Expr(:inbounds, :pop))
+      return Base.nothing
+  end::Void
