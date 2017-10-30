@@ -89,18 +89,18 @@ let blank = nothing; global initstate
     end
 end
 
-function predict(model, state, input; pdrop=0)
+function predict(model, state, newhidden; pdrop=0)
     nlayers = div(length(model)-3,2)
     newstate = similar(state)
     for k = 1:nlayers
         # MY CODE STARTS HERE
         #newstate[2k-1] is the hidden layer (look at the initweights for more explanation)
-        input = dropout(input, pdrop)
-        (newstate[2k-1],newstate[2k])=lstm(model[2k-1],model[2k],state[2k-1],state[2k],input)
-        input = newstate[2k-1]
+        newhidden = dropout(newhidden, pdrop)
+        (newstate[2k-1],newstate[2k])=lstm(model[2k-1],model[2k],state[2k-1],state[2k],newhidden)
+        newhidden = newstate[2k-1]
         # MY CODE ENDS HERE
     end
-    return input,newstate
+    return newhidden,newstate
 end
 
 function generate(model, tok2int, nchar)
