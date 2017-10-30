@@ -2,7 +2,7 @@
 using ProfileView
 using Knet,AutoGrad
 using Knet: sigm_dot, tanh_dot
-Profile.init()
+Profile.init(delay=0.01)
 
 type_of_array = eval(parse("KnetArray{Float32}"))  #TO ENABLE GPU
 # type_of_array = eval(parse("Array{Float32}")) #FOR CPU
@@ -221,7 +221,7 @@ function trainingloop()
         println((:epoch,epoch,:loss,losses...))
     end
 end
-#trainingloop()
+trainingloop()
 Profile.clear()
 @profile trainingloop()
 
