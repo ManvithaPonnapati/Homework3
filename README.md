@@ -1,4 +1,4 @@
-# Homework3
+# LSTM from scratch
 
 Task_1_6_LSTM_LAB - Notebook has the first part of the lab
 
